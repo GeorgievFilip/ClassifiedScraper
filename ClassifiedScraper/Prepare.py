@@ -90,8 +90,6 @@ class Prepare:
         return pages
     
     def get_pages_urls(self, pages, base_url):
-        # newlines = [base_url.format(i*self.page_jump) for i in range(self.first_page, pages+1)]
-        # pags = [self.first_page] + [i*self.page_jump for i in range(self.first_page, pages+1)]
         newlines = [base_url.format(page) for page in [self.first_page] + [i*self.page_jump for i in range(self.first_page, pages+1)]]
         return newlines
         
