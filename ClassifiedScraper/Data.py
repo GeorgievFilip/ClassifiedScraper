@@ -1,7 +1,6 @@
 from Prepare import *
 
 class Data(Prepare):
-    # mora li tuka da ima format_num?
     format_num = 1
     csv_separator = ','
     data_file = 'data.csv'
