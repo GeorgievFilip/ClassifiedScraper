@@ -31,7 +31,6 @@ class Data(Prepare):
 
     def keywords(self, soup, url):
         dic = {}
-        #* ili **
         for x in self.kwargs:
             if len(self.kwargs[x]) == 1:
                 try:
