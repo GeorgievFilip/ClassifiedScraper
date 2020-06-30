@@ -3,4 +3,7 @@ BeautifulSoup
 Tqdm
 Backoff
 lxml
+<<<<<<< HEAD
 Cloudscraper
+=======
+>>>>>>> b6759ccd328626971527c9bcd205e7199c7d7ff8
