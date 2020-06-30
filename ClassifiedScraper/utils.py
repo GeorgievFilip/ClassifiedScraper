@@ -1,6 +1,6 @@
 import random
 import re
-
+#
 # get a single random item from a list
 def random_choice(a_list):
     if a_list is None:
