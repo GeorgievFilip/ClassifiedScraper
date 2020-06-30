@@ -10,8 +10,10 @@ class Prepare:
     format_num = 1
     page_jump = 1
     first_page = 1
-    def __init__(self, input_urls, articles, pages = None, results = None,
-                proxies = None, headers = None, split_results = None, split_pages = None):
+    def __init__(self, input_urls, articles,
+                pages = None, results = None, proxies = None,
+                headers = None, split_results = None, split_pages = None,
+                sess = None, cloudscraper = False):
 
         pages = None if pages is None else pages
         results = None if results is None else results
@@ -19,6 +21,8 @@ class Prepare:
         proxies = None if proxies is None else proxies
         split_results = None if split_results is None else split_results
         split_pages = None if split_pages is None else split_pages
+        sess = None if sess is None else sess
+        cloudscraper = False if cloudscraper is None else cloudscraper
 
         self.input_urls = input_urls
         self.articles = articles
@@ -28,6 +32,19 @@ class Prepare:
         self.proxies = proxies
         self.split_results = split_results
         self.split_pages = split_pages
+        self.sess = sess
+        self.cloudscraper = cloudscraper
+
+    def get_sess(self):
+        if self.sess is None:
+            if self.cloudscraper is False:
+                session = requests.session()
+            elif self.cloudscraper is not False:
+                import cloudscraper
+                session = cloudscraper.create_scraper()
+        elif self.sess is not None:
+            session = self.sess
+        return session
 
     # Get a requests for a given url
     @backoff.on_exception(
@@ -35,7 +52,7 @@ class Prepare:
         IOError,
         max_tries=3
     )
-    def get_url(self, base_url):
+    def get_url(self, base_url, sess):
         if self.proxies is None:
             prox = None
         else:
@@ -46,14 +63,14 @@ class Prepare:
             header = random_choice(self.headers)
 
         if self.format_num is None:
-            return requests.get(base_url,
+            return sess.get(base_url,
                     proxies ={ 
                         "http": prox,
                         "https": prox 
                         },
                         headers = { 'user_agent': header })
         else:
-            return requests.get(base_url.format(self.format_num),
+            return sess.get(base_url.format(self.format_num),
                     proxies = {
                         "http": prox,
                         "https": prox
@@ -90,8 +107,6 @@ class Prepare:
         return pages
     
     def get_pages_urls(self, pages, base_url):
-        # newlines = [base_url.format(i*self.page_jump) for i in range(self.first_page, pages+1)]
-        # pags = [self.first_page] + [i*self.page_jump for i in range(self.first_page, pages+1)]
         newlines = [base_url.format(page) for page in [self.first_page] + [i*self.page_jump for i in range(self.first_page, pages+1)]]
         return newlines
         

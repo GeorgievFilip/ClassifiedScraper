@@ -6,7 +6,7 @@ class Articles(Prepare):
     time_sleep = None
 
     def __init__(self, input_urls, articles, pages = None, results = None, proxies = None, headers = None,
-    split_results = None, split_pages = None):
+    split_results = None, split_pages = None, sess = None, cloudscraper = False):
         super().__init__(input_urls, articles)
 
         pages = None if pages is None else pages
@@ -15,6 +15,8 @@ class Articles(Prepare):
         proxies = None if proxies is None else proxies
         split_results = None if split_results is None else split_results
         split_pages = None if split_pages is None else split_pages
+        sess = None if sess is None else sess
+        cloudscraper = False if cloudscraper is None else cloudscraper
 
         self.pages = pages
         self.results = results
@@ -22,13 +24,16 @@ class Articles(Prepare):
         self.proxies = proxies
         self.split_results = split_results
         self.split_pages = split_pages
+        self.sess = sess
+        self.cloudscraper = cloudscraper
 
     def get_articles(self):
         print("Collecting articles")
         with open(self.txt_file, self.write_mode, encoding="utf-8") as f:
+            sess = self.get_sess()
             for input_url in self.input_urls:
                 url = input_url.split('/')[2]
-                source = self.get_url(input_url)
+                source = self.get_url(input_url, sess)
                 soup = self.get_soup(source)
                 arts = self.soup_attributes(soup, *self.articles)
                 results = self.get_results(soup)
@@ -38,7 +43,7 @@ class Articles(Prepare):
                     pages = 1
                 newlines = self.get_pages_urls(pages, input_url)
                 for newline in newlines:
-                    source = self.get_url(newline)
+                    source = self.get_url(newline, sess)
                     soup = self.get_soup(source)
                     arts = self.soup_attributes(soup, *self.articles)
                     for article in arts:

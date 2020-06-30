@@ -2,3 +2,5 @@ Requests
 BeautifulSoup
 Tqdm
 Backoff
+lxml
+Cloudscraper
