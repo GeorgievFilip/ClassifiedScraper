@@ -1,10 +1,7 @@
 from Prepare import *
 
 class Data(Prepare):
-<<<<<<< HEAD
-=======
     format_num = 1
->>>>>>> b6759ccd328626971527c9bcd205e7199c7d7ff8
     csv_separator = ','
     data_file = 'data.csv'
     write_mode = 'w'
