@@ -1,5 +1,6 @@
 import random
 import re
+import os
 #
 # get a single random item from a list
 def random_choice(a_list):
@@ -38,9 +39,15 @@ def txt_read(file_name):
     f.close()
     return lines
 
+# split a string
 def split_string_at(string, split_string, num = None):
     num = None if num is None else num
     if num is None:
         return string.split(split_string)
     else:
         return string.split(split_string)[num]
+
+# make a dictionary
+def make_directory(newpath):
+    if not os.path.exists(newpath):
+        os.makedirs(newpath)

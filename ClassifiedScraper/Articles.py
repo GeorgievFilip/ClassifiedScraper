@@ -1,5 +1,9 @@
 from Prepare import *
 
+'''Used to scrape URL links from certain sections from a website.
+   NOTE: By default the URL links will be scraped in a 'articles.txt'.
+   To change this change the "txt_file" at the instance you are crating.
+   See the various examples in the 'tests' folder for more info.'''
 class Articles(Prepare):
     txt_file = 'articles.txt'
     write_mode = 'w'

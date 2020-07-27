@@ -1,5 +1,9 @@
 from Prepare import *
 
+'''Used to scrape data from certain sections from a website.
+   NOTE: By default the data will be scraped in a 'data.csv' file.
+   To change this change the "data_file" at the instance you are crating.
+   See the various examples in the 'tests' folder for more info.'''
 class Data(Prepare):
     format_num = 1
     csv_separator = ','
