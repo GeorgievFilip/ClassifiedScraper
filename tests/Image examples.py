@@ -33,7 +33,7 @@ B = Images(
 B.img_folder = '../Data/Images/wiki/'
 B.get_images()
 
-# For scraping every image on the website, don't specify articles
+# For scraping every image on the web page, don't specify articles
 # wow.gamepedia.com
 B = Images(
     input_urls = ['https://wow.gamepedia.com/Kel%27Thuzad']
