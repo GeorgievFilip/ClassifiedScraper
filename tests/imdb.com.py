@@ -1,7 +1,6 @@
 import sys
 sys.path.append('../ClassifiedScraper/')
 
-from Articles import Articles
 from Data import Data
 import random
 from time import sleep
