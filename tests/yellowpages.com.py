@@ -5,6 +5,7 @@ from Articles import Articles
 from Data import Data
 from utils import txt_read
 
+# Retrieve url links so scrape
 A = Articles(
     input_urls = ['https://www.yellowpages.com/new-york-ny/restaurants?page={}'],
     articles = ['div.result'],
@@ -14,6 +15,7 @@ A = Articles(
 A.txt_file = '../Data/yellowpages.com/articles.com.txt'
 A.get_articles()
 
+# Scrape the urls
 B = Data(
     input_urls = txt_read(A.txt_file),
     headers = txt_read('user agents.txt'),
