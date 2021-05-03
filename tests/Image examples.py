@@ -39,3 +39,14 @@ B = Images(
 )
 B.img_folder = '../Data/Images/wow.gamepedia.com (all images)/'
 B.get_images()
+
+# Add image urls directly as input_urls to download them
+B = Images(
+    input_urls=[
+    'https://i.imgur.com/ponmEpk.jpeg',
+    'https://i.imgur.com/peyAKyS.jpg'
+    ]
+)
+make_directory('../Data/Images/imgur/')
+B.img_folder = '../Data/Images/imgur/'
+B.get_images()
