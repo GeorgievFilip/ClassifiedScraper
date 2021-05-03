@@ -9,3 +9,4 @@ This project uses the following libraries:
 * [tqdm](https://github.com/tqdm/tqdm)
 * [backoff](https://github.com/litl/backoff)
 * [cloudscraper](https://github.com/venomous/cloudscraper)
+* [urllib](https://docs.python.org/3/library/urllib.html)
