@@ -37,9 +37,12 @@ class Images(Prepare):
 
     # Used to detect the format of an image in an image url
     def image_format(self, img_url):
-        img_formats = re.compile('.jpg|.jpeg|.png|.svg|.gif', re.IGNORECASE)
-        format_search = re.search(img_formats, os.path.basename(img_url)).group(0)
-        return format_search
+        img_formats = re.compile('.jpg|.jpeg|.png|.svg|.gif|.webm', re.IGNORECASE)
+        format_search = re.search(img_formats, img_url)
+        if format_search:
+            return format_search.group(0)
+        else:
+            return
     
     def find_img_tag(self, soup_element):
         if not soup_element.select_one('img'):
@@ -58,9 +61,9 @@ class Images(Prepare):
         except:
             img_url = soup_element['src']
 
-        if not re.match(r'^[a-zA-Z]+://', img_url):
-            img_url = 'http://' + img_url.strip('//')
+        img_url = self.get_parent_url(img_url)
         format_search = self.image_format(img_url)
+        #?
         if format_search:
             img_url = img_url.split(format_search)[0] + format_search
         return img_url
@@ -79,22 +82,32 @@ class Images(Prepare):
         sess = self.get_sess()
         make_directory(self.img_folder)
         count = 0
+        #Download every image on website
         if not self.results and not self.pages:
             for input_url in self.input_urls:
-                source = self.get_url(input_url, sess)
-                soup = self.get_soup(source)
-                if self.articles is not None:
-                    arts = self.soup_attributes(soup, *self.articles)
-                else:
-                    arts = self.soup_attributes(soup, 'img')
-                for article in arts:
+                if self.image_format(input_url) is not None:
                     try:
-                        img_url = self.get_image_url(article)
-                        with open(self.img_folder + self.get_image_name(img_url), 'wb') as f:
-                            f.write(self.get_url(img_url, sess).content)
+                        with open(self.img_folder + self.get_image_name(input_url), 'wb') as f:
+                            f.write(self.get_url(input_url, sess).content)
                         count += 1
                     except:
                         pass
+                else:
+                    source = self.get_url(input_url, sess)
+                    soup = self.get_soup(source)
+                    if self.articles is not None:
+                        arts = self.soup_attributes(soup, *self.articles)
+                    else:
+                        arts = self.soup_attributes(soup, 'img')
+                    for article in arts:
+                        img_url = self.get_image_url(article)
+                        try:
+                            with open(self.img_folder + self.get_image_name(img_url), 'wb') as f:
+                                f.write(self.get_url(img_url, sess).content)
+                            count += 1
+                        except:
+                            pass
+
                 self.time_sleep
         else:
             for input_url in self.input_urls:
