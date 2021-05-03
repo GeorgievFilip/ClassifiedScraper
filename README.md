@@ -1,6 +1,6 @@
 Classified Scraper
 ========
-Checkout 'test' for various examples
+Check out 'test' for various examples
 
 Credits
 ========
