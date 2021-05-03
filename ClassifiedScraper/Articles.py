@@ -36,7 +36,6 @@ class Articles(Prepare):
         with open(self.txt_file, self.write_mode, encoding="utf-8") as f:
             sess = self.get_sess()
             for input_url in self.input_urls:
-                url = input_url.split('/')[2]
                 source = self.get_url(input_url, sess)
                 soup = self.get_soup(source)
                 arts = self.soup_attributes(soup, *self.articles)
@@ -52,10 +51,8 @@ class Articles(Prepare):
                     arts = self.soup_attributes(soup, *self.articles)
                     for article in arts:
                         href = article.find('a')['href']
-                        if url not in href:
-                            f.write('http://' + url + href+'\n')
-                        else:
-                            f.write(href+'\n')
+                        href = self.get_child_url(input_url, href)
+                        f.write(href +'\n')
                     self.time_sleep
         f.close()
         print("Number of unique articles collected: " + str(len(txt_read(self.txt_file))))
