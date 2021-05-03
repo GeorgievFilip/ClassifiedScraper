@@ -5,7 +5,7 @@ from Articles import Articles
 from Data import Data
 from utils import txt_read
 
-
+# cloudscraper example
 A = Data(
     input_urls = [
         'https://www.ahlanlive.com/star-stories/celebrities/a-z'
