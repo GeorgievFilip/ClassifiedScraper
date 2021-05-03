@@ -82,9 +82,9 @@ class Images(Prepare):
         sess = self.get_sess()
         make_directory(self.img_folder)
         count = 0
-        #Download every image on website
         if not self.results and not self.pages:
             for input_url in self.input_urls:
+               # if input url is an image url
                 if self.image_format(input_url) is not None:
                     try:
                         with open(self.img_folder + self.get_image_name(input_url), 'wb') as f:
@@ -92,6 +92,7 @@ class Images(Prepare):
                         count += 1
                     except:
                         pass
+                # download all images from website
                 else:
                     source = self.get_url(input_url, sess)
                     soup = self.get_soup(source)
@@ -110,6 +111,7 @@ class Images(Prepare):
 
                 self.time_sleep
         else:
+            #download images from a selection
             for input_url in self.input_urls:
                 source = self.get_url(input_url, sess)
                 soup = self.get_soup(source)
