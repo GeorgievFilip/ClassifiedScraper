@@ -4,3 +4,4 @@ Tqdm
 Backoff
 lxml
 Cloudscraper
+urllib
