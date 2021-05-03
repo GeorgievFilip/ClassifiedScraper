@@ -27,7 +27,7 @@ B.get_images()
 # Wikipedia
 B = Images(
     input_urls = ['https://en.wikipedia.org/wiki/Skopje'],
-    articles = ['ul.gallery:nth-child(65) li.gallerybox']
+    articles = ['ul.gallery:nth-child(64) li.gallerybox']
 )
 B.img_folder = '../Data/Images/wiki/'
 B.get_images()
