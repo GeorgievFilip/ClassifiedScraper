@@ -5,6 +5,7 @@ import csv
 import backoff
 from tqdm import tqdm
 from datetime import datetime
+from urllib.parse import urlparse
 
 class Prepare:
     format_num = 1
@@ -45,6 +46,18 @@ class Prepare:
         elif self.sess is not None:
             session = self.sess
         return session
+    
+    def get_parent_url(self, base_url):
+        parse = urlparse(base_url)
+        if parse.scheme =='':
+            base_url = 'https://' + base_url.strip('//')
+        return base_url
+        
+    def get_child_url(self, base_url, child_url):
+        parse = urlparse(child_url)
+        if parse.netloc =='':
+            child_url = 'https://' + urlparse(base_url).netloc + child_url
+        return child_url
 
     # Get a requests for a given url
     @backoff.on_exception(
@@ -61,6 +74,9 @@ class Prepare:
             header = None
         else:
             header = random_choice(self.headers)
+            
+        ##
+        base_url = self.get_parent_url(base_url)
 
         if self.format_num is None:
             return sess.get(base_url,
