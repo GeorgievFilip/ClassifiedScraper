@@ -3,7 +3,7 @@ import re
 
 '''Used to scrape images from a webpage (either all of them or from a selection).
    NOTE: By default the images will be scraped in a 'Images' folder.
-   To change this change the "image_folder" at the instance you are crating.
+   To change this change the "image_folder" at the instance you are creating.
    See "Image examples.py" in the 'tests' folder.'''
 class Images(Prepare):
     format_num = 1
